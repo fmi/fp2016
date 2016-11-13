@@ -1,5 +1,10 @@
 #lang racket
 
+(define (map2 f xs)
+  (if (empty? xs)
+    (list)
+    (cons (f (first xs)) (map2 f (rest xs)))))
+
 (define (filter2 p xs)
   (cond
     [(empty? xs) (list)]
@@ -67,4 +72,4 @@
 
 ; Използвайки знанието за това как работи map в Racket
 (define (zip2 xs ys)
-  (map cons xs ys))
+  (map gons xs ys))
