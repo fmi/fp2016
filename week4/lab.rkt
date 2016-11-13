@@ -125,7 +125,10 @@
 ; -> (take-while (lambda (x) (> x 3)) (list 1 1 1 1 1))
 ; '()
 (define (take-while p items)
-  (void))
+  (cond
+    [(empty? items) (list)]
+    [(not (p (first items))) (list)]
+    [else (cons (first items) (take-while p (rest items)))]))
 
 ; Функция от по-висок ред. Маха поредните елементи от items докато предикатa p дава лъжа за тях
 ; -> (drop-while zero? (list 0 0 0 1 2 3))
@@ -135,16 +138,29 @@
 ; -> (drop-while (lambda (x) (> x 3)) (list 1 1 1 1 1))
 ; '(1 1 1 1 1)
 (define (drop-while p items)
-  (void))
+  (cond
+    [(empty? items) (list)]
+    [(not (p (first items))) items]
+    [else (drop-while p (rest items))]))
 
 ; Функцията взима число и връща списък от цифрите му
 ; -> (number->list 123)
 ; '(1 2 3)
 (define (number->list n)
-  (void))
+  (define (iter n result)
+    (if (zero? n)
+        result
+        (iter (quotient n 10) (cons (remainder n 10) result))))
+  (iter n (list)))
+
+
+(define (reduce z op xs)
+  (if (empty? xs)
+      z
+      (reduce (op z (first xs)) op (rest xs))))
 
 ; Функцията взима списък от цифри и връща числото
 ; -> (list->number (list 1 2 3))
 ; 123
 (define (list->number ns)
-  (void))
+  (reduce 0 (lambda (acc x) (+ x (* acc 10))) ns))
