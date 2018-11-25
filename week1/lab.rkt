@@ -20,7 +20,7 @@
 (define (fact2 n)
   (if
     (zero? n)
-    0
+    1
     (* n (fact2 (- n 1)))))
 
 ; Факториел, написан чрез cond
